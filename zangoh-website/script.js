@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe elements for animation
-    const animateElements = document.querySelectorAll('.service-card, .about-text, .contact-info, .contact-form');
+    const animateElements = document.querySelectorAll('.service-card, .innovation-card, .about-text, .contact-info, .contact-form');
     animateElements.forEach(el => observer.observe(el));
 
     // Contact form handling
@@ -271,11 +271,171 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     }
 
+    // Innovation cards interactive effects
+    function addInnovationEffects() {
+        const innovationCards = document.querySelectorAll('.innovation-card');
+        
+        innovationCards.forEach(card => {
+            // Add glow effect on hover
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 25px 50px -12px rgba(102, 126, 234, 0.3), 0 0 0 1px rgba(102, 126, 234, 0.1)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+            
+            // Add click animation
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+        
+        // Animate tech tags
+        const techTags = document.querySelectorAll('.tech-tag');
+        techTags.forEach((tag, index) => {
+            tag.style.animationDelay = `${index * 0.1}s`;
+            tag.classList.add('fade-in-up');
+        });
+    }
+    
+    // AI metrics counter with enhanced animation
+    function animateInnovationMetrics() {
+        const metrics = document.querySelectorAll('.metric-value');
+        
+        metrics.forEach(metric => {
+            const targetText = metric.textContent;
+            const targetNumber = parseInt(targetText.replace(/[^\d]/g, ''));
+            const suffix = targetText.replace(/[\d]/g, '');
+            
+            if (targetNumber > 0) {
+                const duration = 2000;
+                const increment = targetNumber / (duration / 16);
+                let current = 0;
+                
+                const updateMetric = () => {
+                    if (current < targetNumber) {
+                        current += increment;
+                        metric.textContent = Math.ceil(current) + suffix;
+                        requestAnimationFrame(updateMetric);
+                    } else {
+                        metric.textContent = targetText;
+                    }
+                };
+                
+                // Trigger animation when element is visible
+                const metricObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            metric.textContent = '0' + suffix;
+                            updateMetric();
+                            metricObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                metricObserver.observe(metric);
+            }
+        });
+    }
+    
+    // AI-themed cursor effect for innovation section
+    function addAICursorEffect() {
+        const innovationsSection = document.querySelector('.innovations');
+        if (!innovationsSection) return;
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        innovationsSection.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX - innovationsSection.offsetLeft;
+            mouseY = e.clientY - innovationsSection.offsetTop;
+            
+            // Create glowing cursor trail
+            const trail = document.createElement('div');
+            trail.style.cssText = `
+                position: absolute;
+                left: ${mouseX}px;
+                top: ${mouseY}px;
+                width: 4px;
+                height: 4px;
+                background: rgba(240, 147, 251, 0.6);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 10;
+                animation: cursorTrail 1s ease-out forwards;
+            `;
+            
+            innovationsSection.appendChild(trail);
+            
+            setTimeout(() => {
+                trail.remove();
+            }, 1000);
+        });
+        
+        // Add cursor trail animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes cursorTrail {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: 0;
+                    transform: scale(3);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Enhanced neural network with more interactive features
+    function enhanceNeuralNetworkAdvanced() {
+        const neuralNetwork = document.querySelector('.neural-network');
+        if (!neuralNetwork) return;
+        
+        // Add data flow animation
+        const connections = neuralNetwork.querySelectorAll('.connection');
+        connections.forEach((connection, index) => {
+            // Create flowing data particles
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                background: linear-gradient(45deg, #f093fb, #f5576c);
+                border-radius: 50%;
+                box-shadow: 0 0 10px rgba(240, 147, 251, 0.8);
+            `;
+            
+            connection.appendChild(particle);
+            
+            // Animate particle along connection
+            particle.animate([
+                { left: '0%', opacity: 0 },
+                { left: '50%', opacity: 1 },
+                { left: '100%', opacity: 0 }
+            ], {
+                duration: 3000 + Math.random() * 2000,
+                iterations: Infinity,
+                delay: Math.random() * 2000
+            });
+        });
+    }
+
     // Initialize all enhancements
     enhanceNeuralNetwork();
+    enhanceNeuralNetworkAdvanced();
     animateCounters();
+    animateInnovationMetrics();
     createParticleEffect();
     addTechStackEffects();
+    addInnovationEffects();
+    addAICursorEffect();
 
     // Handle window resize
     window.addEventListener('resize', function() {
