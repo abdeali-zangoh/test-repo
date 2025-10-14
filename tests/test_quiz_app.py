@@ -182,7 +182,8 @@ class TestQuizImport:
             # Try to import - may fail if tkinter is not available
             import quiz
 
-            assert True
+            # Verify the module has the expected QuizApp class
+            assert hasattr(quiz, "QuizApp")
         except ImportError:
             # tkinter not available, skip test
             pytest.skip("tkinter not available in test environment")
