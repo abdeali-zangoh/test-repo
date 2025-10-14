@@ -224,3 +224,84 @@ class TestMain:
         main()
         calls = [str(call[0][0]) for call in mock_print.call_args_list]
         assert any("Goodbye!" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_make_call(self, mock_print, mock_input):
+        """Test main function make call option"""
+        mock_input.side_effect = ["1", "+1234567890", "Test Contact", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("Call initiated" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_end_call(self, mock_print, mock_input):
+        """Test main function end call option"""
+        mock_input.side_effect = ["1", "+1234567890", "Test", "2", "1", "120", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("ended successfully" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_end_call_not_found(self, mock_print, mock_input):
+        """Test main function end call with invalid ID"""
+        mock_input.side_effect = ["2", "999", "120", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("not found" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_view_history_empty(self, mock_print, mock_input):
+        """Test main function view history when empty"""
+        mock_input.side_effect = ["3", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("No call history" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_view_history_with_calls(self, mock_print, mock_input):
+        """Test main function view history with calls"""
+        mock_input.side_effect = ["1", "+1234567890", "Alice", "3", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("ID" in call and "Phone Number" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_search_no_results(self, mock_print, mock_input):
+        """Test main function search with no results"""
+        mock_input.side_effect = ["4", "nonexistent", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("No matching calls" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_search_with_results(self, mock_print, mock_input):
+        """Test main function search with results"""
+        mock_input.side_effect = ["1", "+1234567890", "Bob", "4", "123", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("Found" in call and "matching" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_view_statistics(self, mock_print, mock_input):
+        """Test main function view statistics"""
+        mock_input.side_effect = ["5", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("Call Statistics" in call or "Total calls" in call for call in calls)
+
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_main_value_error(self, mock_print, mock_input):
+        """Test main function handles ValueError"""
+        mock_input.side_effect = ["2", "abc", "6"]
+        main()
+        calls = [str(call[0][0]) for call in mock_print.call_args_list]
+        assert any("Error:" in call for call in calls)

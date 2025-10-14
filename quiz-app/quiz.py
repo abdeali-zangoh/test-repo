@@ -248,12 +248,8 @@ class QuizApp:
             self.score += 1
             messagebox.showinfo("Correct!", "Great job! That's the right answer.")
         else:
-            correct_text = self.questions[self.current_question]["options"][
-                correct_answer
-            ]
-            messagebox.showinfo(
-                "Incorrect", f"Sorry, the correct answer was: {correct_text}"
-            )
+            correct_text = self.questions[self.current_question]["options"][correct_answer]
+            messagebox.showinfo("Incorrect", f"Sorry, the correct answer was: {correct_text}")
 
         self.submit_btn.config(state="disabled")
 
@@ -290,9 +286,7 @@ class QuizApp:
 
         # Score display
         percentage = (self.score / len(self.questions)) * 100
-        score_text = (
-            f"Your Score: {self.score}/{len(self.questions)} ({percentage:.1f}%)"
-        )
+        score_text = f"Your Score: {self.score}/{len(self.questions)} ({percentage:.1f}%)"
 
         score_label = tk.Label(
             results_frame,
