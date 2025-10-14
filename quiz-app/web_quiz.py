@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import json
-import random
-import webbrowser
 import os
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+import random
 import threading
 import time
+import webbrowser
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+
 
 class QuizData:
     def __init__(self):
@@ -13,49 +13,50 @@ class QuizData:
             {
                 "question": "What is the capital of France?",
                 "options": ["London", "Berlin", "Paris", "Madrid"],
-                "correct": 2
+                "correct": 2,
             },
             {
                 "question": "Which planet is known as the Red Planet?",
                 "options": ["Venus", "Mars", "Jupiter", "Saturn"],
-                "correct": 1
+                "correct": 1,
             },
             {
                 "question": "What is 2 + 2?",
                 "options": ["3", "4", "5", "6"],
-                "correct": 1
+                "correct": 1,
             },
             {
                 "question": "Who painted the Mona Lisa?",
                 "options": ["Van Gogh", "Picasso", "Da Vinci", "Monet"],
-                "correct": 2
+                "correct": 2,
             },
             {
                 "question": "What is the largest ocean on Earth?",
                 "options": ["Atlantic", "Indian", "Arctic", "Pacific"],
-                "correct": 3
+                "correct": 3,
             },
             {
                 "question": "Which programming language is known for its simplicity?",
                 "options": ["C++", "Python", "Assembly", "Java"],
-                "correct": 1
+                "correct": 1,
             },
             {
                 "question": "What year did World War II end?",
                 "options": ["1944", "1945", "1946", "1947"],
-                "correct": 1
+                "correct": 1,
             },
             {
                 "question": "What is the chemical symbol for gold?",
                 "options": ["Go", "Gd", "Au", "Ag"],
-                "correct": 2
-            }
+                "correct": 2,
+            },
         ]
-    
+
     def get_questions(self):
         shuffled = self.questions.copy()
         random.shuffle(shuffled)
         return shuffled
+
 
 def generate_html():
     html_content = """
@@ -546,37 +547,39 @@ def generate_html():
     """
     return html_content
 
+
 def main():
     # Create HTML file
     html_content = generate_html()
-    with open('/workspace/quiz-app/quiz.html', 'w') as f:
+    with open("/workspace/quiz-app/quiz.html", "w") as f:
         f.write(html_content)
-    
+
     print("Quiz application created successfully!")
     print("To run the quiz:")
     print("1. Open quiz.html in your web browser")
     print("2. Or run: python web_quiz.py to start a local server")
-    
+
     # Start a simple HTTP server
     try:
-        os.chdir('/workspace/quiz-app')
-        httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
+        os.chdir("/workspace/quiz-app")
+        httpd = HTTPServer(("localhost", 8000), SimpleHTTPRequestHandler)
         print("\nStarting web server at http://localhost:8000")
         print("Opening quiz in browser...")
-        
+
         # Open browser in a separate thread
         def open_browser():
             time.sleep(1)
-            webbrowser.open('http://localhost:8000/quiz.html')
-        
+            webbrowser.open("http://localhost:8000/quiz.html")
+
         threading.Thread(target=open_browser).start()
         httpd.serve_forever()
-        
+
     except KeyboardInterrupt:
         print("\nServer stopped.")
     except Exception as e:
         print(f"Could not start server: {e}")
         print("You can still open quiz.html directly in your browser.")
+
 
 if __name__ == "__main__":
     main()
