@@ -1,10 +1,10 @@
 """Tests for phone-pstn-app/main.py"""
+
 import json
 import os
 import sys
 import tempfile
-from datetime import datetime
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 import pytest
 

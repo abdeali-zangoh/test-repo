@@ -1,4 +1,5 @@
 """Tests for to-do-app/todo.py"""
+
 import json
 import os
 import sys
@@ -6,7 +7,6 @@ import tempfile
 from datetime import datetime
 from unittest.mock import patch
 
-import pytest
 
 # Add to-do-app to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "to-do-app"))
