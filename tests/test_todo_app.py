@@ -120,6 +120,7 @@ class TestTodoApp:
         """Test listing tasks hides completed by default"""
         self.app.add_task("Task 1")
         self.app.tasks[0]["completed"] = True
+        mock_print.reset_mock()  # Clear previous print calls from add_task
         self.app.list_tasks(show_completed=False)
         # Task should not be shown
         calls = [str(call) for call in mock_print.call_args_list]

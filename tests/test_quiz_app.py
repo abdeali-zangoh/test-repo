@@ -180,7 +180,7 @@ class TestQuizImport:
         """Test that quiz module imports without errors"""
         try:
             # Try to import - may fail if tkinter is not available
-            import quiz
+            import quiz  # noqa: F401
 
             assert True
         except ImportError:

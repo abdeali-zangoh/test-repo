@@ -21,25 +21,31 @@ A modern, interactive quiz application built with Python that features both desk
 ## How to Run
 
 ### Web Version (Recommended)
+
 ```bash
 cd quiz-app
 python web_quiz.py
 ```
+
 This will start a local web server at http://localhost:8000 and automatically open the quiz in your browser.
 
 ### Desktop Version
+
 ```bash
 cd quiz-app
 python quiz.py
 ```
+
 Note: Requires tkinter to be installed (`python3-tk` package on Ubuntu/Debian).
 
 ### Standalone HTML
+
 You can also open `quiz.html` directly in any modern web browser.
 
 ## Quiz Content
 
 The quiz includes 8 questions covering:
+
 - Geography (capitals, oceans)
 - Astronomy (planets)
 - Mathematics (basic arithmetic)
