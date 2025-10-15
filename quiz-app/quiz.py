@@ -222,7 +222,7 @@ class QuizApp:
 
             # Display options
             for i, option in enumerate(question_data["options"]):
-                self.option_buttons[i].config(text=f"{chr(65+i)}. {option}")
+                self.option_buttons[i].config(text=f"{chr(65 + i)}. {option}")
 
             # Reset selection
             self.selected_option.set(-1)
